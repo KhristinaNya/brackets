@@ -1,24 +1,18 @@
 module.exports = 
 function check(str, bracketsConfig) {
-  let arrValueBrackets = [];
-  let sum = 0;
-  let indexElement = -1;
+  const newBracketsConfig = bracketsConfig.map(element => (element[0] + element[1]));
 
-  bracketsConfig.forEach((element, index) => {
-    arrValueBrackets.push([10**index, (-1) * 10**index]);
-  }); 
+  let lengString = str.length;
 
-  str.split('').forEach((element)=>{
-    bracketsConfig.forEach((item, index)=>{ 
-      if (sum >= 0){
-        indexElement = item.indexOf(element);
-        sum += indexElement >=0 ? arrValueBrackets[index][indexElement ] : 0;
-      }
-      }
-    );
+  while (str.length) {
+    newBracketsConfig.forEach(element => (str = str.replaceAll(element, '')));
+
+    if (str.length === lengString ) {
+      return false;
+    }
+
+    lengString  = str.length;
   }
-  );
-  return sum === 0;
+
+  return true;
 }
-//const config1 =  [['(', ')'], ['|', '|']];
-//console.log(check('[(])', config1));
